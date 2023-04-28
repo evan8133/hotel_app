@@ -127,7 +127,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    FirebaseAuthMethods(FirebaseAuth.instance)
+                        .signInWithGoogle(context);
+                  },
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [

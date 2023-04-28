@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "889059980934-purb5ubdvlkk9el0ukc69n4jgn234ad1.apps.googleusercontent.com",
+          "client_id": "889059980934-c0fgphsprd5q840i3m2ut73sqhhnfbt8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hotel_app",
+            "certificate_hash": "12e4732e655d425225a62b5e9bcba6130d92f561"
+          }
+        },
+        {
+          "client_id": "889059980934-4q1fvfjirif269m5fn3vn216q1uien66.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "889059980934-purb5ubdvlkk9el0ukc69n4jgn234ad1.apps.googleusercontent.com",
+              "client_id": "889059980934-4q1fvfjirif269m5fn3vn216q1uien66.apps.googleusercontent.com",
               "client_type": 3
             },
             {

@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hotel_app/core/utils/showSnackbar.dart';
 
 class FirebaseAuthMethods {
@@ -63,5 +65,33 @@ class FirebaseAuthMethods {
   // phone verification
 
   // login with google
-  
+  Future<void> signInWithGoogle(BuildContext context) async {
+    try{
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+      if(googleAuth?.accessToken != null && googleAuth?.idToken != null){
+        final credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth!.accessToken,
+          idToken: googleAuth.idToken,
+        );
+        UserCredential userCredential = await _auth.signInWithCredential(credential);
+        if(userCredential.user != null){
+          if (userCredential.additionalUserInfo!.isNewUser) {
+            //to store data in firestore
+          //   await FirebaseFirestore.instance
+          //       .collection('users')
+          //       .doc(userCredential.user!.uid)
+          //       .set({
+          //     'name': userCredential.user!.displayName,
+          //     'email': userCredential.user!.email,
+          //     'profile_pic': userCredential.user!.photoURL,
+          //   });
+          }
+        }
+      }
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context, e.message!);
+    }
+  }
 }

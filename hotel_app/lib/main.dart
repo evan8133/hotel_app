@@ -1,9 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hotel_app/feature/login/page/login_screen.dart';
+import 'package:hotel_app/firebase_option.dart';
 
-void main() {
+import 'feature/home/page/home_screen.dart';
+import 'feature/login/page/phone_screen.dart';
+import 'feature/login/page/signup_email_password_screen.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
@@ -44,8 +54,12 @@ class MyApp extends StatelessWidget {
         fontFamily: GoogleFonts.notoSans().fontFamily,
       ),
       themeMode: ThemeMode.system,
-      // routes: ,
-      home: LoginScreen(),
+      routes: {
+        EmailPasswordSignup.routeName: (context) => const EmailPasswordSignup(),
+        HomeScreen.routeName: (context) => const HomeScreen(),
+        PhoneScreen.routeName: (context) => const PhoneScreen(),
+      },
+      home: const LoginScreen(),
     );
   }
 }

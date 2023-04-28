@@ -1,4 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hotel_app/feature/login/page/phone_screen.dart';
+import 'package:hotel_app/feature/login/page/signup_email_password_screen.dart';
+import '../controller/firebase_auth_methods.dart';
 import '../widget/custom_button.dart';
 import '../widget/custom_textfield.dart';
 
@@ -14,6 +18,14 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
+  void loginUser() async {
+    FirebaseAuthMethods(FirebaseAuth.instance).loginWithEmail(
+      email: emailController.text,
+      password: passwordController.text,
+      context: context,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,7 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
         title: const Text('Hotel Booking'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const SizedBox(height: 20),
           const Text(
@@ -46,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           const SizedBox(height: 40),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: loginUser,
             style: ButtonStyle(
               minimumSize: MaterialStateProperty.all(
                 Size(MediaQuery.of(context).size.width / 2.5, 50),
@@ -67,7 +79,9 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, EmailPasswordSignup.routeName);
+                  },
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -89,7 +103,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, PhoneScreen.routeName);
+                  },
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [

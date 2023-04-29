@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:hotel_app/feature/login/page/phone_screen.dart';
 import 'package:hotel_app/feature/login/page/signup_email_password_screen.dart';
@@ -8,7 +9,7 @@ import '../widget/custom_textfield.dart';
 class LoginScreen extends StatefulWidget {
   static String routeName = '/login-email-password';
   const LoginScreen({Key? key}) : super(key: key);
-
+  static const String name = '/login';    
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }

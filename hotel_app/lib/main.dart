@@ -9,10 +9,9 @@ import 'package:hotel_app/feature/login/page/login_screen.dart';
 import 'package:hotel_app/firebase_option.dart';
 import 'package:provider/provider.dart';
 
+import 'core/router/router.dart';
+import 'core/router/router.gr.dart';
 import 'feature/Navigation/navigation.dart';
-import 'feature/home/page/home_screen.dart';
-import 'feature/login/page/phone_screen.dart';
-import 'feature/login/page/signup_email_password_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -79,19 +78,5 @@ class MyApp extends StatelessWidget {
         routeInformationParser: _appRouter.defaultRouteParser(),
       ),
     );
-  }
-}
-
-class AuthWrapper extends StatelessWidget {
-  const AuthWrapper({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final firebaseUser = context.watch<User?>();
-    if (firebaseUser != null) {
-      return const NavigationPages();
-    } else {
-      return const LoginScreen();
-    }
   }
 }

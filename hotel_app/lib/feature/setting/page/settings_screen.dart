@@ -6,6 +6,7 @@ import 'package:settings_ui/settings_ui.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
+  static const String name = '/settings';
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();

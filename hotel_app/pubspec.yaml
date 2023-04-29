@@ -44,6 +44,7 @@ dependencies:
   cloud_firestore: ^4.5.3
   google_nav_bar: ^5.0.6
   adaptive_dialog: ^1.8.3
+  settings_ui: ^2.0.2
 
 dev_dependencies:
   flutter_test:

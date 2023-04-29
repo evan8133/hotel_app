@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
@@ -18,12 +19,12 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  MyApp({super.key});
+  final _appRouter = AppRouter();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
         //   create: (_) => StorageMethods(FirebaseStorage.instance),
         // ),
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
         title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         theme: FlexThemeData.light(
@@ -74,13 +75,8 @@ class MyApp extends StatelessWidget {
           fontFamily: GoogleFonts.notoSans().fontFamily,
         ),
         themeMode: ThemeMode.system,
-        routes: {
-          EmailPasswordSignup.routeName: (context) =>
-              const EmailPasswordSignup(),
-          HomeScreen.routeName: (context) => const HomeScreen(),
-          PhoneScreen.routeName: (context) => const PhoneScreen(),
-        },
-        home: const AuthWrapper(),
+        routerDelegate: AutoRouterDelegate(_appRouter),
+        routeInformationParser: _appRouter.defaultRouteParser(),
       ),
     );
   }

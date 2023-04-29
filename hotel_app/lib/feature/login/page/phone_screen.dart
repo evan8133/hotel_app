@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hotel_app/feature/login/controller/firebase_auth_methods.dart';
 import 'package:provider/provider.dart';
 
 import '../widget/custom_button.dart';
@@ -21,6 +23,13 @@ class _PhoneScreenState extends State<PhoneScreen> {
     phoneController.dispose();
   }
 
+  void phoneSignIn() {
+    FirebaseAuthMethods(FirebaseAuth.instance).signInWithPhone(
+      phoneNumber: phoneController.text,
+      context: context,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +46,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
               hintText: 'Enter phone number',
             ),
             CustomButton(
-              onTap: () {},
+              onTap: phoneSignIn,
               text: 'OK',
             ),
           ],

@@ -1,10 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hotel_app/feature/login/controller/firebase_auth_methods.dart';
 import 'package:hotel_app/feature/login/page/login_screen.dart';
 import 'package:hotel_app/firebase_option.dart';
+import 'package:provider/provider.dart';
 
+import 'feature/Navigation/navigation.dart';
 import 'feature/home/page/home_screen.dart';
 import 'feature/login/page/phone_screen.dart';
 import 'feature/login/page/signup_email_password_screen.dart';
@@ -23,43 +27,75 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: FlexThemeData.light(
-        scheme: FlexScheme.pinkM3,
-        surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
-        blendLevel: 7,
-        subThemesData: const FlexSubThemesData(
-          blendOnLevel: 10,
-          blendOnColors: false,
-          useM2StyleDividerInM3: true,
+    return MultiProvider(
+      providers: [
+        Provider<FirebaseAuthMethods>(
+          create: (_) => FirebaseAuthMethods(FirebaseAuth.instance),
         ),
-        visualDensity: FlexColorScheme.comfortablePlatformDensity,
-        useMaterial3: true,
-        swapLegacyOnMaterial3: true,
-        fontFamily: GoogleFonts.notoSans().fontFamily,
-      ),
-      darkTheme: FlexThemeData.dark(
-        scheme: FlexScheme.pinkM3,
-        surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
-        blendLevel: 13,
-        subThemesData: const FlexSubThemesData(
-          blendOnLevel: 20,
-          useM2StyleDividerInM3: true,
+        StreamProvider(
+          create: (context) => context.read<FirebaseAuthMethods>().authState,
+          initialData: null,
+        )
+        // Provider<FirestoreMethods>(
+        //   create: (_) => FirestoreMethods(FirebaseFirestore.instance),
+        // ),
+        // Provider<StorageMethods>(
+        //   create: (_) => StorageMethods(FirebaseStorage.instance),
+        // ),
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: FlexThemeData.light(
+          scheme: FlexScheme.pinkM3,
+          surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+          blendLevel: 7,
+          subThemesData: const FlexSubThemesData(
+            blendOnLevel: 10,
+            blendOnColors: false,
+            useM2StyleDividerInM3: true,
+          ),
+          visualDensity: FlexColorScheme.comfortablePlatformDensity,
+          useMaterial3: true,
+          swapLegacyOnMaterial3: true,
+          fontFamily: GoogleFonts.notoSans().fontFamily,
         ),
-        visualDensity: FlexColorScheme.comfortablePlatformDensity,
-        useMaterial3: true,
-        swapLegacyOnMaterial3: true,
-        fontFamily: GoogleFonts.notoSans().fontFamily,
+        darkTheme: FlexThemeData.dark(
+          scheme: FlexScheme.pinkM3,
+          surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
+          blendLevel: 13,
+          subThemesData: const FlexSubThemesData(
+            blendOnLevel: 20,
+            useM2StyleDividerInM3: true,
+          ),
+          visualDensity: FlexColorScheme.comfortablePlatformDensity,
+          useMaterial3: true,
+          swapLegacyOnMaterial3: true,
+          fontFamily: GoogleFonts.notoSans().fontFamily,
+        ),
+        themeMode: ThemeMode.system,
+        routes: {
+          EmailPasswordSignup.routeName: (context) =>
+              const EmailPasswordSignup(),
+          HomeScreen.routeName: (context) => const HomeScreen(),
+          PhoneScreen.routeName: (context) => const PhoneScreen(),
+        },
+        home: const AuthWrapper(),
       ),
-      themeMode: ThemeMode.system,
-      routes: {
-        EmailPasswordSignup.routeName: (context) => const EmailPasswordSignup(),
-        HomeScreen.routeName: (context) => const HomeScreen(),
-        PhoneScreen.routeName: (context) => const PhoneScreen(),
-      },
-      home: const LoginScreen(),
     );
+  }
+}
+
+class AuthWrapper extends StatelessWidget {
+  const AuthWrapper({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final firebaseUser = context.watch<User?>();
+    if (firebaseUser != null) {
+      return const NavigationPages();
+    } else {
+      return const LoginScreen();
+    }
   }
 }

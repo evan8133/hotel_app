@@ -1,9 +1,8 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hotel_app/feature/login/page/phone_screen.dart';
 import 'package:hotel_app/feature/login/page/signup_email_password_screen.dart';
+import 'package:provider/provider.dart';
 import '../controller/firebase_auth_methods.dart';
-import '../widget/custom_button.dart';
 import '../widget/custom_textfield.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -19,11 +18,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
 
   void loginUser() async {
-    FirebaseAuthMethods(FirebaseAuth.instance).loginWithEmail(
-      email: emailController.text,
-      password: passwordController.text,
-      context: context,
-    );
+    context.read<FirebaseAuthMethods>().loginWithEmail(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
+          context: context,
+        );
   }
 
   @override
@@ -128,7 +127,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                    FirebaseAuthMethods(FirebaseAuth.instance)
+                    context
+                        .read<FirebaseAuthMethods>()
                         .signInWithGoogle(context);
                   },
                   child: Column(

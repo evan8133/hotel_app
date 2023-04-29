@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hotel_app/feature/login/controller/firebase_auth_methods.dart';
 import 'package:provider/provider.dart';
@@ -24,10 +23,13 @@ class _PhoneScreenState extends State<PhoneScreen> {
   }
 
   void phoneSignIn() {
-    FirebaseAuthMethods(FirebaseAuth.instance).signInWithPhone(
-      phoneNumber: phoneController.text,
-      context: context,
-    );
+    context
+        .read<FirebaseAuthMethods>()
+        .signInWithPhone(
+          phoneNumber: phoneController.text,
+          context: context,
+        )
+        .then((_) {});
   }
 
   @override

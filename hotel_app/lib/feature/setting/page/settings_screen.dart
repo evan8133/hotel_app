@@ -12,6 +12,7 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
+  bool darkMode = true;
   @override
   Widget build(BuildContext context) {
     return SettingsList(
@@ -34,8 +35,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             SettingsTile.switchTile(
               leading: const Icon(Icons.dark_mode_sharp),
               title: const Text('Dark Mode'),
-              initialValue: true,
-              onToggle: (value) {},
+              initialValue: darkMode,
+              onToggle: (value) {
+                setState(() {
+                  darkMode = value;
+                });
+              },
             ),
           ],
         ),

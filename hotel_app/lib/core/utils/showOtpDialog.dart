@@ -20,6 +20,12 @@ void showOTPDialog({
       ),
       actions: <Widget>[
         TextButton(
+          child: const Text("Close"),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        TextButton(
           child: const Text("Done"),
           onPressed: onPressed,
         )

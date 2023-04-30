@@ -29,7 +29,7 @@ class _NavigationPagesState extends State<NavigationPages> {
         return SalomonBottomBar(
           margin: const EdgeInsets.symmetric(
             horizontal: 20,
-            vertical: 40,
+            vertical: 20,
           ),
           currentIndex: tabsRouter.activeIndex,
           onTap: tabsRouter.setActiveIndex,

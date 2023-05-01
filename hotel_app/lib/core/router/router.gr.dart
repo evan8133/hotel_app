@@ -33,7 +33,7 @@ class AppRouter extends _i10.RootStackRouter {
     WrapperRoute.name: (routeData) {
       return _i10.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i1.AuthStateWrapper(),
+        child: const _i1.AuthWrapper(),
       );
     },
     HomeRoute.name: (routeData) {
@@ -142,7 +142,7 @@ class AppRouter extends _i10.RootStackRouter {
 }
 
 /// generated route for
-/// [_i1.AuthStateWrapper]
+/// [_i1.AuthWrapper]
 class WrapperRoute extends _i10.PageRouteInfo<void> {
   const WrapperRoute()
       : super(

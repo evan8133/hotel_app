@@ -18,7 +18,7 @@ import '../../feature/main/main_route.dart';
       initial: true,
       path: '/',
       name: 'WrapperRoute',
-      page: AuthStateWrapper,
+      page: AuthWrapper,
     ),
     AutoRoute(
       path: 'home',

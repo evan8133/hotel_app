@@ -7,6 +7,7 @@ import 'package:hotel_app/feature/login/page/phone_screen.dart';
 import 'package:hotel_app/feature/profile/page/profile_screen.dart';
 import 'package:hotel_app/feature/setting/page/settings_screen.dart';
 
+import '../../feature/Navigation/navigation.dart';
 import '../../feature/login/page/signup_email_password_screen.dart';
 import '../../feature/main/main_route.dart';
 
@@ -17,23 +18,13 @@ import '../../feature/main/main_route.dart';
       initial: true,
       path: '/',
       name: 'WrapperRoute',
-      page: AuthWrapper,
+      page: AuthStateWrapper,
+    ),
+    AutoRoute(
+      path: 'home',
+      name: 'HomeRoute',
+      page: NavigationPages,
       children: [
-        AutoRoute(
-          path: 'login',
-          name: 'Login',
-          page: LoginScreen,
-        ),
-        AutoRoute(
-          path: 'phone',
-          name: 'Phone',
-          page: PhoneScreen,
-        ),
-        AutoRoute(
-          path: 'signup-email-password',
-          name: 'SignupEmailPassword',
-          page: EmailPasswordSignup,
-        ),
         AutoRoute(
           path: 'Profile',
           name: 'Profile',
@@ -42,12 +33,8 @@ import '../../feature/main/main_route.dart';
         AutoRoute(
           path: 'home',
           name: 'Home',
-          page: EmptyRouterPage,
+          page: HomeScreen,
           children: [
-            AutoRoute(
-              path: '',
-              page: HomeScreen,
-            ),
             AutoRoute(
               path: ':id',
               page: HomeTest,
@@ -58,9 +45,24 @@ import '../../feature/main/main_route.dart';
           path: 'settings',
           name: 'Settings',
           page: SettingsScreen,
-        )
+        ),
       ],
     ),
+    AutoRoute(
+      path: 'login',
+      name: 'Login',
+      page: LoginScreen,
+    ),
+    AutoRoute(
+          path: 'phone',
+          name: 'PhoneRoute',
+          page: PhoneScreen,
+        ),
+        AutoRoute(
+          path: 'signupemailpassword',
+          name: 'SignupEmailPasswordRoute',
+          page: EmailPasswordSignup,
+        ),
   ],
 )
 class $AppRouter {}

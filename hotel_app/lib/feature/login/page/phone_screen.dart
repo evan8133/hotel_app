@@ -6,7 +6,7 @@ import '../widget/custom_button.dart';
 import '../widget/custom_textfield.dart';
 
 class PhoneScreen extends StatefulWidget {
-  static String routeName = '/phone';
+  static String routeName = 'phone';
   const PhoneScreen({Key? key}) : super(key: key);
 
   @override

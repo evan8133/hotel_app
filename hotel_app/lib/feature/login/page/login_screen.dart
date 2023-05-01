@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:hotel_app/feature/login/page/phone_screen.dart';
 import 'package:hotel_app/feature/login/page/signup_email_password_screen.dart';
 import 'package:provider/provider.dart';
+import '../../../core/router/router.gr.dart';
 import '../controller/firebase_auth_methods.dart';
 import '../widget/custom_textfield.dart';
 
 class LoginScreen extends StatefulWidget {
   static String routeName = '/login-email-password';
   const LoginScreen({Key? key}) : super(key: key);
-  static const String name = '/login';    
+  static const String name = 'login';
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -30,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text('Hotel Booking'),
       ),
       body: Column(
@@ -80,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, EmailPasswordSignup.routeName);
+                    context.router.push(SignupEmailPasswordRoute());
                   },
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -104,7 +106,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                    Navigator.pushNamed(context, PhoneScreen.routeName);
+                    context.router.push(
+                      const PhoneRoute(),
+                    );
                   },
                   child: Column(
                     mainAxisSize: MainAxisSize.min,

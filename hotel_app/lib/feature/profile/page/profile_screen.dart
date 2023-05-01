@@ -8,7 +8,7 @@ import '../../login/widget/custom_button.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
-  static const String name = '/profile';
+  static const String name = 'profile';
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();

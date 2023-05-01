@@ -12,17 +12,17 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i10;
-import 'package:auto_route/empty_router_widgets.dart' as _i6;
 import 'package:flutter/material.dart' as _i11;
 
-import '../../feature/home/page/home_screen.dart' as _i8;
+import '../../feature/home/page/home_screen.dart' as _i7;
 import '../../feature/home/page/home_test.dart' as _i9;
-import '../../feature/login/page/login_screen.dart' as _i2;
-import '../../feature/login/page/phone_screen.dart' as _i3;
-import '../../feature/login/page/signup_email_password_screen.dart' as _i4;
+import '../../feature/login/page/login_screen.dart' as _i3;
+import '../../feature/login/page/phone_screen.dart' as _i4;
+import '../../feature/login/page/signup_email_password_screen.dart' as _i5;
 import '../../feature/main/main_route.dart' as _i1;
-import '../../feature/profile/page/profile_screen.dart' as _i5;
-import '../../feature/setting/page/settings_screen.dart' as _i7;
+import '../../feature/Navigation/navigation.dart' as _i2;
+import '../../feature/profile/page/profile_screen.dart' as _i6;
+import '../../feature/setting/page/settings_screen.dart' as _i8;
 
 class AppRouter extends _i10.RootStackRouter {
   AppRouter([_i11.GlobalKey<_i11.NavigatorState>? navigatorKey])
@@ -33,49 +33,49 @@ class AppRouter extends _i10.RootStackRouter {
     WrapperRoute.name: (routeData) {
       return _i10.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i1.AuthWrapper(),
+        child: const _i1.AuthStateWrapper(),
+      );
+    },
+    HomeRoute.name: (routeData) {
+      return _i10.MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const _i2.NavigationPages(),
       );
     },
     Login.name: (routeData) {
       return _i10.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i2.LoginScreen(),
+        child: const _i3.LoginScreen(),
       );
     },
-    Phone.name: (routeData) {
+    PhoneRoute.name: (routeData) {
       return _i10.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i3.PhoneScreen(),
+        child: const _i4.PhoneScreen(),
       );
     },
-    SignupEmailPassword.name: (routeData) {
+    SignupEmailPasswordRoute.name: (routeData) {
       return _i10.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i4.EmailPasswordSignup(),
+        child: const _i5.EmailPasswordSignup(),
       );
     },
     Profile.name: (routeData) {
       return _i10.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i5.ProfileScreen(),
+        child: const _i6.ProfileScreen(),
       );
     },
     Home.name: (routeData) {
       return _i10.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i6.EmptyRouterPage(),
+        child: const _i7.HomeScreen(),
       );
     },
     Settings.name: (routeData) {
       return _i10.MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const _i7.SettingsScreen(),
-      );
-    },
-    HomeScreen.name: (routeData) {
-      return _i10.MaterialPageX<dynamic>(
-        routeData: routeData,
-        child: const _i8.HomeScreen(),
+        child: const _i8.SettingsScreen(),
       );
     },
     HomeTest.name: (routeData) {
@@ -97,69 +97,77 @@ class AppRouter extends _i10.RootStackRouter {
         _i10.RouteConfig(
           WrapperRoute.name,
           path: '/',
+        ),
+        _i10.RouteConfig(
+          HomeRoute.name,
+          path: 'home',
           children: [
-            _i10.RouteConfig(
-              Login.name,
-              path: 'login',
-              parent: WrapperRoute.name,
-            ),
-            _i10.RouteConfig(
-              Phone.name,
-              path: 'phone',
-              parent: WrapperRoute.name,
-            ),
-            _i10.RouteConfig(
-              SignupEmailPassword.name,
-              path: 'signup-email-password',
-              parent: WrapperRoute.name,
-            ),
             _i10.RouteConfig(
               Profile.name,
               path: 'Profile',
-              parent: WrapperRoute.name,
+              parent: HomeRoute.name,
             ),
             _i10.RouteConfig(
               Home.name,
               path: 'home',
-              parent: WrapperRoute.name,
+              parent: HomeRoute.name,
               children: [
-                _i10.RouteConfig(
-                  HomeScreen.name,
-                  path: '',
-                  parent: Home.name,
-                ),
                 _i10.RouteConfig(
                   HomeTest.name,
                   path: ':id',
                   parent: Home.name,
-                ),
+                )
               ],
             ),
             _i10.RouteConfig(
               Settings.name,
               path: 'settings',
-              parent: WrapperRoute.name,
+              parent: HomeRoute.name,
             ),
           ],
-        )
+        ),
+        _i10.RouteConfig(
+          Login.name,
+          path: 'login',
+        ),
+        _i10.RouteConfig(
+          PhoneRoute.name,
+          path: 'phone',
+        ),
+        _i10.RouteConfig(
+          SignupEmailPasswordRoute.name,
+          path: 'signupemailpassword',
+        ),
       ];
 }
 
 /// generated route for
-/// [_i1.AuthWrapper]
+/// [_i1.AuthStateWrapper]
 class WrapperRoute extends _i10.PageRouteInfo<void> {
-  const WrapperRoute({List<_i10.PageRouteInfo>? children})
+  const WrapperRoute()
       : super(
           WrapperRoute.name,
           path: '/',
-          initialChildren: children,
         );
 
   static const String name = 'WrapperRoute';
 }
 
 /// generated route for
-/// [_i2.LoginScreen]
+/// [_i2.NavigationPages]
+class HomeRoute extends _i10.PageRouteInfo<void> {
+  const HomeRoute({List<_i10.PageRouteInfo>? children})
+      : super(
+          HomeRoute.name,
+          path: 'home',
+          initialChildren: children,
+        );
+
+  static const String name = 'HomeRoute';
+}
+
+/// generated route for
+/// [_i3.LoginScreen]
 class Login extends _i10.PageRouteInfo<void> {
   const Login()
       : super(
@@ -171,31 +179,31 @@ class Login extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i3.PhoneScreen]
-class Phone extends _i10.PageRouteInfo<void> {
-  const Phone()
+/// [_i4.PhoneScreen]
+class PhoneRoute extends _i10.PageRouteInfo<void> {
+  const PhoneRoute()
       : super(
-          Phone.name,
+          PhoneRoute.name,
           path: 'phone',
         );
 
-  static const String name = 'Phone';
+  static const String name = 'PhoneRoute';
 }
 
 /// generated route for
-/// [_i4.EmailPasswordSignup]
-class SignupEmailPassword extends _i10.PageRouteInfo<void> {
-  const SignupEmailPassword()
+/// [_i5.EmailPasswordSignup]
+class SignupEmailPasswordRoute extends _i10.PageRouteInfo<void> {
+  const SignupEmailPasswordRoute()
       : super(
-          SignupEmailPassword.name,
-          path: 'signup-email-password',
+          SignupEmailPasswordRoute.name,
+          path: 'signupemailpassword',
         );
 
-  static const String name = 'SignupEmailPassword';
+  static const String name = 'SignupEmailPasswordRoute';
 }
 
 /// generated route for
-/// [_i5.ProfileScreen]
+/// [_i6.ProfileScreen]
 class Profile extends _i10.PageRouteInfo<void> {
   const Profile()
       : super(
@@ -207,7 +215,7 @@ class Profile extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i6.EmptyRouterPage]
+/// [_i7.HomeScreen]
 class Home extends _i10.PageRouteInfo<void> {
   const Home({List<_i10.PageRouteInfo>? children})
       : super(
@@ -220,7 +228,7 @@ class Home extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i7.SettingsScreen]
+/// [_i8.SettingsScreen]
 class Settings extends _i10.PageRouteInfo<void> {
   const Settings()
       : super(
@@ -229,18 +237,6 @@ class Settings extends _i10.PageRouteInfo<void> {
         );
 
   static const String name = 'Settings';
-}
-
-/// generated route for
-/// [_i8.HomeScreen]
-class HomeScreen extends _i10.PageRouteInfo<void> {
-  const HomeScreen()
-      : super(
-          HomeScreen.name,
-          path: '',
-        );
-
-  static const String name = 'HomeScreen';
 }
 
 /// generated route for

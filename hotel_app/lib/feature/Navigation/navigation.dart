@@ -4,14 +4,14 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 import '../../core/router/router.gr.dart';
 
-class NavigationPages extends StatefulWidget {
-  const NavigationPages({super.key});
+class NavigationScreens extends StatefulWidget {
+  const NavigationScreens({super.key});
 
   @override
-  State<NavigationPages> createState() => _NavigationPagesState();
+  State<NavigationScreens> createState() => _NavigationPagesState();
 }
 
-class _NavigationPagesState extends State<NavigationPages> {
+class _NavigationPagesState extends State<NavigationScreens> {
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
@@ -21,9 +21,9 @@ class _NavigationPagesState extends State<NavigationPages> {
         leading: const AutoLeadingButton(),
       ),
       routes: const [
-        Home(),
-        Profile(),
-        Settings(),
+        HomeRoute(),
+        ProfileRoute(),
+        SettingsRoute(),
       ],
       bottomNavigationBuilder: (context, tabsRouter) {
         return SalomonBottomBar(

@@ -47,6 +47,10 @@ dependencies:
   settings_ui: ^2.0.2
   auto_route: ^5.0.4
   salomon_bottom_bar: ^3.3.2
+  firebase_storage: ^11.2.1
+  flutter_icons_plus: ^1.0.3
+  flutter_iconpicker_plus: ^3.2.3
+  material_design_icons_flutter: ^6.0.7096
   
 
 dev_dependencies:

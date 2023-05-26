@@ -2,7 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:provider/provider.dart';
 import 'package:settings_ui/settings_ui.dart';
+
+import '../../../core/utils/theme_provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -16,6 +19,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
   bool darkMode = true;
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return SettingsList(
       sections: [
         SettingsSection(
@@ -41,6 +45,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 setState(() {
                   darkMode = value;
                 });
+                final newThemeMode =
+                    value ? ThemeModeType.dark : ThemeModeType.light;
+                themeProvider.setThemeMode(newThemeMode);
               },
             ),
           ],

@@ -1,6 +1,8 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hotel_app/core/router/router.gr.dart';
 import 'package:provider/provider.dart';
 
 import '../../login/controller/firebase_auth_methods.dart';
@@ -177,7 +179,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     final user = context.read<FirebaseAuthMethods>().user;
     final isGoogleSignIn =
-        user.providerData.any((info) => info.providerId == 'google.com');
+        user!.providerData.any((info) => info.providerId == 'google.com');
 
     return SingleChildScrollView(
       child: Column(
@@ -270,7 +272,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           CustomButton(
             onTap: () {
-              context.read<FirebaseAuthMethods>().signOut(context);
+              context.read<FirebaseAuthMethods>().signOut(context).then((value) => context.router.replace(const LoginRoute()));
             },
             text: 'Sign Out',
           ),

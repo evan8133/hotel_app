@@ -1,5 +1,8 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:hotel_app/feature/home/widgets/hotels.dart';
 
 import '../../../core/router/router.gr.dart';
 
@@ -8,52 +11,93 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
   static const String name = '/home';
 
+  Future<String> getImageUrl(Reference imageRef) async {
+    final String downloadUrl = await imageRef.getDownloadURL();
+    return downloadUrl;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      child: Container(
-        padding: EdgeInsets.all(16),
-        width: MediaQuery.of(context).size.width * 0.8,
-        height: MediaQuery.of(context).size.height * 0.6,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: Image.network(
-                'https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=',
-                height: 150,
-                width: double.infinity,
-                fit: BoxFit.cover,
+    final FirebaseStorage storage = FirebaseStorage.instance;
+    return StreamBuilder<QuerySnapshot>(
+      stream: FirebaseFirestore.instance.collection('hotels').snapshots(),
+      builder: (context, snapshot) {
+        if (snapshot.hasError) {
+          return Center(
+            child: Text('Error: ${snapshot.error}'),
+          );
+        }
+
+        if (!snapshot.hasData) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
+        final hotels = snapshot.data!.docs;
+
+        return ListView.builder(
+          itemCount: hotels.length,
+          itemBuilder: (context, index) {
+            final hotel = hotels[index].data();
+            final Map<String, dynamic> hotelData =
+                hotel as Map<String, dynamic>;
+            print(hotelData);
+            final String imagePath =
+                'gs://hotel-booking-5e032.appspot.com/hotels/${hotels[index].id}/main.jpg';
+            final Reference imageRef = storage.refFromURL(imagePath);
+            print(imagePath);
+            return Container(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: FutureBuilder<String>(
+                      future: getImageUrl(imageRef),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          // While waiting for the image to load, display a progress indicator
+                          return const SizedBox(
+                            width: double.infinity,
+                            height: 50,
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          // If an error occurred while loading the image, display an error message
+                          return const Text('Error loading image');
+                        } else if (snapshot.hasData) {
+                          // If the image URL is available, display the image using Image.network
+                          final imageUrl = snapshot.data!;
+                          return HotelCard(
+                            url: imageUrl,
+                            name: hotelData['name'],
+                            address: hotelData['address'],
+                            description: hotelData['description'],
+                            star: hotelData['star'],
+                            amenities:
+                                List<String>.from(hotelData['amenities']),
+                            nearbyAttractions: List<String>.from(
+                                hotelData['nearbyAttractions']),
+                          );
+                        } else {
+                          // If none of the above conditions are met, display a placeholder
+                          return const Placeholder();
+                        }
+                      },
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                ],
               ),
-            ),
-            SizedBox(height: 16),
-            Text(
-              'Hotel Example',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 8),
-            Text(
-              '123 Main Street, City, Country',
-              style: TextStyle(fontSize: 16, color: Colors.grey[700]),
-            ),
-            SizedBox(height: 8),
-            Text(
-              'Price: \$100/night',
-              style: TextStyle(fontSize: 18, color: Colors.blue[900]),
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                context.pushRoute(HomeTest(id: 1));
-              },
-              child: Text('See More'),
-            ),
-          ],
-        ),
-      ),
-    ));
+            );
+          },
+        );
+      },
+    );
   }
 }

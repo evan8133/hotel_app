@@ -10,7 +10,7 @@ class FirebaseAuthMethods {
   FirebaseAuthMethods(this._auth);
 
   //user
-  User get user => _auth.currentUser!;
+  User? get user => _auth.currentUser;
 
   // state
   Stream<User?> get authState => _auth.authStateChanges();
@@ -235,7 +235,7 @@ class FirebaseAuthMethods {
     try {
       await FirebaseFirestore.instance
           .collection('users')
-          .doc(user.uid)
+          .doc(user!.uid)
           .update({'name': displayName});
       await _auth.currentUser!.updateDisplayName(displayName);
       showSnackBar(context, 'Display name updated');
@@ -334,7 +334,7 @@ class FirebaseAuthMethods {
       await _auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         verificationCompleted: (PhoneAuthCredential credential) async {
-          await currentUser.linkWithCredential(credential);
+          await currentUser!.linkWithCredential(credential);
           showSnackBar(context, 'Phone account linked');
         },
         verificationFailed: (FirebaseAuthException e) {
@@ -350,7 +350,7 @@ class FirebaseAuthMethods {
                 smsCode: codeController.text.trim(),
               );
               // Link the phone number with the current user account
-              await currentUser.linkWithCredential(credential);
+              await currentUser!.linkWithCredential(credential);
               codeController.dispose();
 
               // Update Firestore with the new phone number

@@ -20,13 +20,21 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController passwordController = TextEditingController();
 
   void loginUser() async {
-    context.read<FirebaseAuthMethods>().loginWithEmail(
+    context
+        .read<FirebaseAuthMethods>()
+        .loginWithEmail(
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
           context: context,
-        );
+        )
+        .then((value) => context.router.replace(const NavigationRoute()));
   }
-
+@override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +90,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 InkWell(
                   onTap: () {
-                    context.router.push(SignupEmailPasswordRoute());
+                    // context.router.push(SignupEmailPasswordRoute());
                   },
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -106,9 +114,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 InkWell(
                   onTap: () {
-                    context.router.push(
-                      const PhoneRoute(),
-                    );
+                    //context.router.push(const PhoneRoute());
                   },
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -131,8 +137,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 InkWell(
-                  onTap: () {
-                    context
+                  onTap: () async {
+                    await context
                         .read<FirebaseAuthMethods>()
                         .signInWithGoogle(context);
                   },

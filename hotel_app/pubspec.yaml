@@ -51,6 +51,7 @@ dependencies:
   flutter_icons_plus: ^1.0.3
   flutter_iconpicker_plus: ^3.2.3
   material_design_icons_flutter: ^6.0.7096
+  flutter_rating_bar: ^4.0.1
   
 
 dev_dependencies:

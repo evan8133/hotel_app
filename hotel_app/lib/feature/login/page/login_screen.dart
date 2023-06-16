@@ -56,6 +56,16 @@ class _LoginScreenState extends State<LoginScreen> {
             child: CustomTextField(
               controller: emailController,
               hintText: 'Enter your email',
+              keyboardType: TextInputType.emailAddress,
+              validator: (p0) {
+                if (p0!.isEmpty) {
+                  return 'Please enter your email';
+                }
+                if(RegExp(r"^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$").hasMatch(p0)){
+                  return 'Please enter valid email';
+                }
+                return null;
+              },
             ),
           ),
           const SizedBox(height: 20),
@@ -64,6 +74,16 @@ class _LoginScreenState extends State<LoginScreen> {
             child: CustomTextField(
               controller: passwordController,
               hintText: 'Enter your password',
+              isPassowrd: true,
+              validator: (p0) {
+                if (p0!.isEmpty) {
+                  return 'Please enter your password';
+                }
+                if (p0.length < 6) {
+                  return 'Password must be at least 6 characters';
+                }
+                return null;
+              },
             ),
           ),
           const SizedBox(height: 40),
@@ -90,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
               children: [
                 InkWell(
                   onTap: () {
-                    // context.router.push(SignupEmailPasswordRoute());
+                     context.router.push(const SignupRoute());
                   },
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -112,35 +132,35 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                 ),
-                InkWell(
-                  onTap: () {
-                    //context.router.push(const PhoneRoute());
-                  },
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          border:
-                              Border.all(color: Theme.of(context).primaryColor),
-                        ),
-                        child: const Icon(
-                          Icons.phone,
-                          size: 40,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      const Text("Phone Sign In"),
-                    ],
-                  ),
-                ),
+                // InkWell(
+                //   onTap: () {
+                //     //context.router.push(const PhoneRoute());
+                //   },
+                //   child: Column(
+                //     mainAxisSize: MainAxisSize.min,
+                //     children: [
+                //       Container(
+                //         padding: const EdgeInsets.all(8),
+                //         decoration: BoxDecoration(
+                //           borderRadius: BorderRadius.circular(50),
+                //           border:
+                //               Border.all(color: Theme.of(context).primaryColor),
+                //         ),
+                //         child: const Icon(
+                //           Icons.phone,
+                //           size: 40,
+                //         ),
+                //       ),
+                //       const SizedBox(height: 8),
+                //       const Text("Phone Sign In"),
+                //     ],
+                //   ),
+                // ),
                 InkWell(
                   onTap: () async {
                     await context
                         .read<FirebaseAuthMethods>()
-                        .signInWithGoogle(context);
+                        .signInWithGoogle(context).then((value) => context.router.replace(const NavigationRoute()));
                   },
                   child: Column(
                     mainAxisSize: MainAxisSize.min,

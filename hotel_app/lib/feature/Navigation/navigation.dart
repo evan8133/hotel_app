@@ -22,6 +22,7 @@ class _NavigationPagesState extends State<NavigationScreens> {
       ),
       routes: const [
         HomeRoute(),
+        SearchRoute(),
         ProfileRoute(),
         SettingsRoute(),
       ],
@@ -40,6 +41,11 @@ class _NavigationPagesState extends State<NavigationScreens> {
               selectedColor: Theme.of(context).colorScheme.primary,
             ),
             SalomonBottomBarItem(
+              icon: const Icon(Icons.search),
+              title: const Text('Search'),
+              selectedColor: Theme.of(context).colorScheme.primary,
+            ),
+            SalomonBottomBarItem(
               icon: const Icon(Icons.person),
               title: const Text('Profile'),
               selectedColor: Theme.of(context).colorScheme.primary,
@@ -55,48 +61,3 @@ class _NavigationPagesState extends State<NavigationScreens> {
     );
   }
 }
-
-// Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Hotel Booking App'),
-//       ),
-//       bottomNavigationBar: Container(
-//         color: Theme.of(context).colorScheme.onPrimary,
-//         child: Padding(
-//           padding: const EdgeInsets.symmetric(
-//             horizontal: 20,
-//             vertical: 12,
-//           ),
-//           child: GNav(
-//             backgroundColor: Theme.of(context).colorScheme.onPrimary,
-//             activeColor: Theme.of(context).colorScheme.primary,
-//             padding: const EdgeInsets.all(15),
-//             gap: 5,
-//             selectedIndex: index,
-//             onTabChange: (value) {
-//               setState(() {
-//                 index = value;
-//               });
-//             },
-//             tabs: [
-//               GButton(
-//                 icon: index == 0 ? Icons.home : Icons.home_outlined,
-//                 text: 'Home',
-//               ),
-//               GButton(
-//                 icon: index == 1 ? Icons.person : Icons.person_outlined,
-//                 text: 'Profile',
-//               ),
-//               GButton(
-//                 icon: index == 2 ? Icons.settings : Icons.settings_outlined,
-//                 text: 'Settings',
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//       body: SafeArea(
-//         bottom: true,
-//         child: _screens[index],
-//       ),
-//     );

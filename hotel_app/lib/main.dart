@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,6 +9,8 @@ import 'package:hotel_app/feature/login/controller/firebase_auth_methods.dart';
 import 'package:hotel_app/firebase_option.dart';
 import 'package:provider/provider.dart';
 
+import 'core/controller/firestore_methods.dart';
+import 'core/controller/storage_methods.dart';
 import 'core/router/router.dart';
 import 'core/router/router.gr.dart';
 import 'core/utils/theme_provider.dart';
@@ -27,7 +31,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
   // This widget is the root of your application.
-  final _appRouter = AppRouter(authGuard: AuthGuard());
+  final _appRouter = AppRouter(authGuard: AuthGuard(),nonAuthGuard: NonAuthGuard());
   @override
   Widget build(BuildContext context) {
     
@@ -42,13 +46,13 @@ class MyApp extends StatelessWidget {
         StreamProvider(
           create: (context) => context.read<FirebaseAuthMethods>().authState,
           initialData: null,
-        )
-        // Provider<FirestoreMethods>(
-        //   create: (_) => FirestoreMethods(FirebaseFirestore.instance),
-        // ),
-        // Provider<StorageMethods>(
-        //   create: (_) => StorageMethods(FirebaseStorage.instance),
-        // ),
+        ),
+        Provider<FirestoreMethods>(
+          create: (_) => FirestoreMethods(FirebaseFirestore.instance),
+        ),
+        Provider<StorageMethods>(
+          create: (_) => StorageMethods(FirebaseStorage.instance),
+        ),
       ],
       child: MaterialApp.router(
         title: 'Flutter Demo',

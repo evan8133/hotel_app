@@ -46,6 +46,15 @@ class _PhoneScreenState extends State<PhoneScreen> {
             CustomTextField(
               controller: phoneController,
               hintText: 'Enter phone number',
+              validator: (p0) {
+                if (p0!.isEmpty) {
+                  return 'Please enter your phone number';
+                }
+                if (p0.length < 10) {
+                  return 'Phone number must be at least 10 characters';
+                }
+                return null;
+              },
             ),
             CustomButton(
               onTap: phoneSignIn,
